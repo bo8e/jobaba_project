@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin wallet add</title>
+    <!-- bootstrap 링크 추가-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    <!-- jquery 링크 추가 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>사용자 인증서 발급 페이지</h1>
+        <p>관리자 인증을 위한 ID와 Role을 입력하시오.</p>
+        <br />
+        <label class="form-label">ID</label>
+        <input type="text" class="form-control" id="userid" />
+        <br />
+        <label class="form-label">ROLE</label>
+        <input type="text" value="client"class="form-control" id="userrole" />
+        <br />
+        <button class="btn btn-danger" id="gen-btn">사용자 인증서 생성</button>
+    </div>
+    <!--결과 출력 영역-->
+    <div class="container" id="result"></div>
+    </body>
+    <script>
+        //버튼클릭시
+        //ID와 password를 가져와서 /admin POST를 요청->Response를 화면에 출력 
+        $("#gen-btn").click(() => {
+            const userid= $("#userid").val();
+            const userrole = $("#userrole").val();
+
+            console.log(userid, userrole);
+
+            $.post("/user", {userid, userrole}, (data, status) => {
+                console.log(status);
+
+                $("#result").empty();
+                const res = JSON.stringify(data);
+                $("#result").append(res);
+            });
+        });
+    </script>
